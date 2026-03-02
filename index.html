@@ -1,146 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Abhi – Robotics Engineer</title>
+  <title>Abhi Srinivasan – Robotics Engineer</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #0a0a0f;
-      color: #e8e8f0;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      overflow: hidden;
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --bg:#0a0a0f;--surface:#12121a;--border:rgba(99,102,241,0.18);
+      --accent:#818cf8;--accent2:#38bdf8;--text:#e8e8f0;--muted:#94a3b8;--dim:#475569;
+    }
+    body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+    body::before{
+      content:'';position:fixed;inset:0;
+      background-image:linear-gradient(rgba(99,102,241,0.05) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(99,102,241,0.05) 1px,transparent 1px);
+      background-size:48px 48px;pointer-events:none;z-index:0;
     }
 
-    /* Subtle grid background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(99,102,241,0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(99,102,241,0.07) 1px, transparent 1px);
-      background-size: 48px 48px;
-      pointer-events: none;
-    }
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.85);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;
+      padding:0 2rem;height:56px;}
+    .nav-brand{font-weight:700;font-size:1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .nav-tabs{display:flex;gap:0;}
+    .tab-btn{background:none;border:none;color:var(--muted);font-size:0.9rem;padding:0 1.2rem;height:56px;
+      cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;font-family:inherit;}
+    .tab-btn:hover{color:var(--text);}
+    .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
 
-    .container {
-      text-align: center;
-      padding: 2rem;
-      max-width: 680px;
-      animation: fadeUp 0.9s ease both;
-    }
+    /* PAGES */
+    .page{display:none;max-width:860px;margin:0 auto;padding:3rem 2rem;position:relative;z-index:1;}
+    .page.active{display:block;}
 
-    .badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #818cf8;
-      border: 1px solid rgba(99,102,241,0.35);
-      padding: 0.3rem 0.9rem;
-      border-radius: 999px;
-      margin-bottom: 1.8rem;
-    }
+    /* HERO */
+    .hero{text-align:center;margin-bottom:3.5rem;animation:fadeUp 0.7s ease both;}
+    .hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:0.5rem;}
+    .hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .hero .role{color:var(--accent);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem;}
+    .hero p{color:var(--muted);line-height:1.75;max-width:600px;margin:0 auto 1.5rem;}
+    .hero-links{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;}
+    .pill{font-size:0.8rem;padding:0.35rem 0.9rem;border-radius:999px;border:1px solid var(--border);
+      color:var(--muted);text-decoration:none;transition:all 0.2s;}
+    .pill:hover{border-color:var(--accent);color:var(--accent);}
 
-    h1 {
-      font-size: clamp(2.4rem, 6vw, 3.8rem);
-      font-weight: 700;
-      line-height: 1.15;
-      margin-bottom: 1.2rem;
-      letter-spacing: -0.02em;
-    }
+    /* SECTION */
+    section{margin-bottom:3rem;animation:fadeUp 0.6s ease both;}
+    .section-title{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);
+      margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;}
+    .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
 
-    h1 span {
-      background: linear-gradient(135deg, #818cf8, #38bdf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    /* CARD */
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+      padding:1.5rem;margin-bottom:1rem;transition:border-color 0.2s;}
+    .card:hover{border-color:rgba(99,102,241,0.4);}
+    .card-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem;}
+    .card-title{font-size:1rem;font-weight:600;}
+    .card-sub{font-size:0.85rem;color:var(--accent);margin-bottom:0.25rem;}
+    .card-date{font-size:0.78rem;color:var(--dim);white-space:nowrap;}
+    .card-location{font-size:0.78rem;color:var(--dim);}
+    ul.bullets{list-style:none;padding:0;margin-top:0.75rem;}
+    ul.bullets li{font-size:0.88rem;color:var(--muted);padding:0.25rem 0 0.25rem 1.1rem;
+      position:relative;line-height:1.6;}
+    ul.bullets li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:0.75rem;top:0.3rem;}
+    .tag-row{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem;}
+    .tag{font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:4px;background:rgba(99,102,241,0.1);
+      color:var(--accent);border:1px solid rgba(99,102,241,0.2);}
 
-    p {
-      font-size: 1.1rem;
-      line-height: 1.75;
-      color: #94a3b8;
-      margin-bottom: 2.5rem;
-    }
+    /* SKILLS */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;}
+    .skill-group h4{font-size:0.75rem;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem;}
+    .skill-group p{font-size:0.85rem;color:var(--muted);line-height:1.7;}
 
-    .links {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+    /* PROJECT CARD */
+    .proj-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+      padding:1.5rem;margin-bottom:1rem;transition:border-color 0.2s;}
+    .proj-card:hover{border-color:rgba(56,189,248,0.4);}
+    .proj-title{font-size:1rem;font-weight:600;margin-bottom:0.3rem;}
+    .proj-meta{font-size:0.78rem;color:var(--dim);margin-bottom:0.75rem;}
+    .proj-link{font-size:0.8rem;color:var(--accent2);text-decoration:none;}
+    .proj-link:hover{text-decoration:underline;}
 
-    a {
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding: 0.6rem 1.4rem;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-    }
-
-    a.primary {
-      background: linear-gradient(135deg, #6366f1, #38bdf8);
-      color: #fff;
-    }
-
-    a.primary:hover {
-      opacity: 0.85;
-      transform: translateY(-2px);
-    }
-
-    a.ghost {
-      border: 1px solid rgba(255,255,255,0.15);
-      color: #cbd5e1;
-    }
-
-    a.ghost:hover {
-      border-color: rgba(99,102,241,0.6);
-      color: #818cf8;
-      transform: translateY(-2px);
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 3px;
-      height: 1em;
-      background: #818cf8;
-      margin-left: 3px;
-      vertical-align: middle;
-      animation: blink 1s step-end infinite;
-    }
-
-    @keyframes blink { 50% { opacity: 0; } }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="badge">Robotics &amp; Control Systems Engineer</div>
 
-    <h1>Hi, I'm <span>Abhi</span>.</h1>
+<nav>
+  <span class="nav-brand">Abhi Srinivasan</span>
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showPage('experience',this)">Experience</button>
+    <button class="tab-btn" onclick="showPage('projects',this)">Projects</button>
+  </div>
+</nav>
 
-    <p>
-      I work at the intersection of control theory, path planning and making things move.
-    </p>
+<!-- ===== PAGE 1: EXPERIENCE ===== -->
+<div class="page active" id="experience">
 
-    <div class="links">
-      <a class="primary" href="#projects">View Projects</a>
-      <a class="ghost" href="https://github.com/abhi" target="_blank">GitHub</a>
-      <a class="ghost" href="mailto:abhi@example.com">Contact</a>
+  <div class="hero">
+    <div class="role">Robotics Software Engineer</div>
+    <h1>Abhi <span>Srinivasan</span></h1>
+    <p>Building and deploying robotic manipulation and control systems on physical hardware. End-to-end from simulation to on-robot testing, debugging, and production deployment.</p>
+    <div class="hero-links">
+      <a class="pill" href="https://www.linkedin.com/in/abhinandan14/" target="_blank">⌥ LinkedIn</a>
+      <a class="pill" href="mailto:abhinandan96is@gmail.com">✉ Email</a>
+      <a class="pill">📍 San Francisco Bay Area</a>
     </div>
   </div>
+
+  <section>
+    <div class="section-title">Work Experience</div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Senior Robotics Software Engineer</div>
+          <div class="card-sub">Kawasaki Robotics</div>
+          <div class="card-location">San Jose, CA</div>
+        </div>
+        <div class="card-date">June 2022 – Present</div>
+      </div>
+      <ul class="bullets">
+        <li>Developed Automatic Wafer Detection to detect payload offset update robot motion path on-the-fly to 100 micron placement accuracy.</li>
+        <li>Built software for Kawasaki's proprietary Particle Abatement System — saves up to 70% of typical cleaning cycle time.</li>
+        <li>Technical Software lead for two $5M+ order value projects with leading semiconductor companies.</li>
+        <li>Developed firmware for specialized hardware to support wafer transfers in the fab.</li>
+        <li>Built a ground-up robot diagnostics tool for predictive robot health monitoring.</li>
+      </ul>
+      <div class="tag-row">
+        <span class="tag">AS Language</span><span class="tag">Kinematics</span><span class="tag">Trajectory Planning</span>
+        <span class="tag">Firmware</span><span class="tag">Semiconductor Fab</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Robotics Software Engineer</div>
+          <div class="card-sub">Gorbel Inc.</div>
+          <div class="card-location">Rochester, NY</div>
+        </div>
+        <div class="card-date">Jan 2020 – June 2022</div>
+      </div>
+      <ul class="bullets">
+        <li>Designed and implemented a force/torque-based control system enabling a robotic crane to intuitively lift and position loads by sensing applied human force.</li>
+        <li>Extended the core control architecture to a rehabilitation device (Gorbel SafeGait), adapting for precision, safety, and human-centric motion.</li>
+      </ul>
+      <div class="tag-row">
+        <span class="tag">Force Control</span><span class="tag">Human-Robot Interaction</span><span class="tag">Rehabilitation Robotics</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Mechatronics Intern</div>
+          <div class="card-sub">ASML</div>
+          <div class="card-location">Wilton, CT</div>
+        </div>
+        <div class="card-date">June 2019 – Sept 2019</div>
+      </div>
+      <ul class="bullets">
+        <li>Determined effect of cable spring constant on final placement accuracy.</li>
+        <li>Developed a linear regression model for temperature-based correction on the end-stage linear reticle for EUV etching.</li>
+      </ul>
+      <div class="tag-row">
+        <span class="tag">EUV Lithography</span><span class="tag">Mechatronics</span><span class="tag">Regression Modeling</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Graduate Research Assistant</div>
+          <div class="card-sub">Robotics and Rehabilitation Lab, Columbia University</div>
+          <div class="card-location">New York, NY</div>
+        </div>
+        <div class="card-date">Jan 2019 – June 2019</div>
+      </div>
+      <ul class="bullets">
+        <li>Analyzed performance of different RL policies (MLP, CNN, MLP-LSTM) on OpenAI Gym for dynamic obstacle avoidance.</li>
+      </ul>
+      <div class="tag-row">
+        <span class="tag">Reinforcement Learning</span><span class="tag">OpenAI Gym</span><span class="tag">Python</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">Education</div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">MS in Robotics</div>
+          <div class="card-sub">Columbia University</div>
+          <div class="card-location">New York, NY</div>
+        </div>
+        <div class="card-date">Dec 2019 · GPA 3.71</div>
+      </div>
+      <ul class="bullets">
+        <li>Teaching Assistant for Mechatronics and Embedded Systems — conducted lab sessions for 45 students.</li>
+        <li>Coursework: Robot Learning, Artificial Intelligence, Humanoid Robots, Advanced Robotics.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">BE in Mechanical Engineering</div>
+          <div class="card-sub">PSG College of Technology</div>
+          <div class="card-location">Coimbatore, India</div>
+        </div>
+        <div class="card-date">June 2018</div>
+      </div>
+      <ul class="bullets">
+        <li>Led roll cage design of Formula Student Car (Pegasus'17) — finished 11/75 at Formula Student Germany.</li>
+        <li>Best final year dissertation (1st/120) on building a flexible magnetometer-based soft sensor.</li>
+        <li>1st/1200 in university-wide Math Olympiad (placed 2nd, 8th, 10th in three other editions).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">Skills</div>
+    <div class="card">
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h4>Languages</h4>
+          <p>Python · C · C++ · AS (Kawasaki)</p>
+        </div>
+        <div class="skill-group">
+          <h4>Frameworks</h4>
+          <p>ROS · ROS2 · Gazebo · OpenAI Gym</p>
+        </div>
+        <div class="skill-group">
+          <h4>Domains</h4>
+          <p>Motion Planning · Manipulation · Real-time Control · Kinematics · Force Control</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ===== PAGE 2: PROJECTS ===== -->
+<div class="page" id="projects">
+
+  <div class="hero">
+    <div class="role">Side Projects & Research</div>
+    <h1>My <span>Projects</span></h1>
+    <p>A collection of robotics mini-projects, research implementations, and academic work spanning motion planning, localization, and evolutionary algorithms.</p>
+  </div>
+
+  <section>
+    <div class="section-title">Projects</div>
+
+    <div class="proj-card">
+      <div class="proj-title">Robotics Mini Projects</div>
+      <div class="proj-meta">Personal · Present</div>
+      <ul class="bullets">
+        <li>Kuka Robot and UR5 simulations in Gazebo with A*, RRT, Bi-directional RRT, and RRT* algorithms for manipulator trajectory planning.</li>
+        <li>Virtual environment using LiDAR and odometry readings with EKF and Monte Carlo Localization (particle filter) algorithms.</li>
+      </ul>
+      <div class="tag-row">
+        <span class="tag">ROS</span><span class="tag">Gazebo</span><span class="tag">Motion Planning</span>
+        <span class="tag">SLAM</span><span class="tag">EKF</span><span class="tag">RRT*</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-title">Path Planning and Grasping on Fetch Robot</div>
+      <div class="proj-meta">Columbia University · Sept 2019</div>
+      <ul class="bullets">
+        <li>Used ROS packages for path planning and grasping of objects from point-cloud data on the Fetch robot.</li>
+      </ul>
+      <div class="tag-row">
+        <span class="tag">ROS</span><span class="tag">Point Cloud</span><span class="tag">Grasping</span><span class="tag">Path Planning</span>
+      </div>
+      <br/>
+      <a class="proj-link" href="https://www.youtube.com/watch?v=placeholder" target="_blank">▶ Watch Demo</a>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-title">Evolutionary Walking Algorithm</div>
+      <div class="proj-meta">Columbia University · Dec 2018</div>
+      <ul class="bullets">
+        <li>Developed a genetic algorithm that generates and optimizes shapes and parameters of cubes to form a walking robot.</li>
+        <li>Implemented in C++ with graphics in OpenGL and vPython.</li>
+      </ul>
+      <div class="tag-row">
+        <span class="tag">C++</span><span class="tag">Genetic Algorithm</span><span class="tag">OpenGL</span><span class="tag">vPython</span>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<script>
+  function showPage(id, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
 </body>
 </html>
