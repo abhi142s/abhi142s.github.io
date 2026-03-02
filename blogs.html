@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abhi Srinivasan – Blogs</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Abhi Srinivasan</a>
+  <div class="nav-tabs">
+    <a class="tab-btn" href="index.html">Experience</a>
+    <a class="tab-btn" href="projects.html">Projects</a>
+    <a class="tab-btn active" href="blogs.html">Blogs</a>
+  </div>
+</nav>
+
+<!-- BLOG LIST VIEW -->
+<div class="page" id="blog-list">
+  <div class="hero">
+    <div class="role">Writing & Thoughts</div>
+    <h1>My <span>Blogs</span></h1>
+    <p>Writing about robotics, control systems, and lessons learned building real robots.</p>
+  </div>
+
+  <section>
+    <div class="section-title">Posts</div>
+
+    <!-- =============================================
+         TO ADD A NEW BLOG POST:
+         1. Copy one blog-card div below
+         2. Update the data-id, title, date, summary
+         3. Add matching post content in the #blog-post section at the bottom
+         ============================================= -->
+
+    <div class="blog-card" onclick="openPost('post-1')">
+      <div class="blog-card-inner">
+        <div>
+          <div class="proj-title">Placeholder: Lessons from Building a Wafer Detection System</div>
+          <div class="proj-meta">March 2026 · 5 min read</div>
+          <p class="blog-summary">What I learned pushing robot accuracy to 100 microns in a live semiconductor fab — and why the hardest problems weren't the ones I expected.</p>
+          <div class="tag-row">
+            <span class="tag">Robotics</span><span class="tag">Semiconductor</span><span class="tag">Controls</span>
+          </div>
+        </div>
+        <div class="blog-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="blog-card" onclick="openPost('post-2')">
+      <div class="blog-card-inner">
+        <div>
+          <div class="proj-title">Placeholder: Force Control Intuitions for Human-Robot Collaboration</div>
+          <div class="proj-meta">Feb 2026 · 4 min read</div>
+          <p class="blog-summary">Building a robotic crane that responds to human touch requires more than a good controller — it requires empathy in the design.</p>
+          <div class="tag-row">
+            <span class="tag">Force Control</span><span class="tag">HRI</span><span class="tag">Design</span>
+          </div>
+        </div>
+        <div class="blog-arrow">→</div>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<!-- BLOG POST VIEW (hidden by default) -->
+<div class="page" id="blog-post" style="display:none;">
+  <button class="back-btn" onclick="closePost()">← Back to Blogs</button>
+
+  <article id="post-content"></article>
+</div>
+
+<!-- POST CONTENT TEMPLATES -->
+<template id="post-1">
+  <div class="post-header">
+    <div class="role">March 2026 · 5 min read</div>
+    <h1>Lessons from Building a <span>Wafer Detection System</span></h1>
+    <div class="tag-row" style="justify-content:center;margin-top:1rem;">
+      <span class="tag">Robotics</span><span class="tag">Semiconductor</span><span class="tag">Controls</span>
+    </div>
+  </div>
+  <div class="post-body">
+    <p>Replace this placeholder with your blog content. You can use standard HTML — paragraphs, headings, code blocks, images, etc.</p>
+    <h2>Section Heading</h2>
+    <p>More content here...</p>
+    <pre><code># Example code block
+def detect_wafer(image):
+    pass</code></pre>
+  </div>
+</template>
+
+<template id="post-2">
+  <div class="post-header">
+    <div class="role">Feb 2026 · 4 min read</div>
+    <h1>Force Control Intuitions for <span>Human-Robot Collaboration</span></h1>
+    <div class="tag-row" style="justify-content:center;margin-top:1rem;">
+      <span class="tag">Force Control</span><span class="tag">HRI</span><span class="tag">Design</span>
+    </div>
+  </div>
+  <div class="post-body">
+    <p>Replace this placeholder with your blog content.</p>
+    <h2>Section Heading</h2>
+    <p>More content here...</p>
+  </div>
+</template>
+
+<script>
+  function openPost(id) {
+    const tpl = document.getElementById(id);
+    if (!tpl) return;
+    document.getElementById('post-content').innerHTML = tpl.innerHTML;
+    document.getElementById('blog-list').style.display = 'none';
+    document.getElementById('blog-post').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+
+  function closePost() {
+    document.getElementById('blog-post').style.display = 'none';
+    document.getElementById('blog-list').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>
